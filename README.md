@@ -1,6 +1,11 @@
 # simplelightbox
 Touch-friendly image lightbox for mobile and desktop
 
+**Changes:**
+
+* Added functionality for video playback within lightbox
+  * New options: links, linksData
+
 ### Features
 * responsive
 * touchfriendly
@@ -62,13 +67,15 @@ For a whole example just look at the demo folder.
 | spinner | true | bool | show spinner or not |
 | nav | true | bool | show arrow-navigation or not |
 | navText | ['&larr;','&rarr;'] | array | text or html for the navigation arrows |
-| captions | true | bool | show captions if availabled or not |
+| captions | true | bool | show captions if available or not |
 | captionSelector | 'img' | string | set the element where the caption is. Set it to "self" for the A-Tag itself |
 | captionType | 'attr' | string | how to get the caption. You can choose between attr, data or text |
 | captionsData | title | string | get the caption from given attribute |
 | captionPosition | 'bottom' | string | the position of the caption. Options are top, bottom or outside (note that outside can be outside the visible viewport!) |
 | captionDelay | 0 | int | adds a delay before the caption shows (in ms) |
 | captionClass | '' | string | add an additional class to the sl-caption |
+| links | true | bool | show links if available or not |
+| linksData | title | string | get the link from given attribute |
 | close | true | bool | show the close button or not |
 | closeText | '×' | string | text or html for the close button |
 | swipeClose | true | bool | swipe up or down to close gallery |

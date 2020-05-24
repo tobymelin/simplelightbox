@@ -204,6 +204,12 @@ body.hidden-scroll {
                 bottom: auto;
             }
         }
+        .sl-link {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
         .sl-download {
             display: none;

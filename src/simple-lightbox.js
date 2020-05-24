@@ -13,6 +13,10 @@ class SimpleLightbox {
         captionsData: 'title',
         captionPosition: 'bottom',
         captionClass: '',
+        links: true,
+        linksData: 'data-link',
+        videoLinks: true,
+        videoRegEx: /.*\.(mp4|avi)$/,
         close: true,
         closeText: '&times;',
         swipeClose: true,
@@ -236,6 +240,16 @@ class SimpleLightbox {
             this.domNodes.caption.classList.add(this.options.captionClass);
         }
 
+        this.domNodes.link = document.createElement('a');
+        this.domNodes.link.classList.add('sl-link');
+        this.domNodes.link.innerHTML = '&nbsp;'
+
+        if (this.options.videoLinks) {
+            this.domNodes.video = document.createElement('video');
+            this.domNodes.video.controls = true
+            this.domNodes.video.autoplay = true
+        }
+
         this.domNodes.image = document.createElement('div');
         this.domNodes.image.classList.add('sl-image');
 
@@ -425,6 +439,14 @@ class SimpleLightbox {
                   this.domNodes.image.removeChild(this.domNodes.caption);
                 }
 
+                if(this.domNodes.image.contains(this.domNodes.link)) {
+                  this.domNodes.image.removeChild(this.domNodes.link);
+                }
+
+                if(this.domNodes.image.contains(this.domNodes.video)) {
+                  this.domNodes.image.removeChild(this.domNodes.video);
+                }
+
                 this.adjustImage(slideDirection);
                 if (this.options.preloading) this.preload();
             }, 100);
@@ -513,6 +535,11 @@ class SimpleLightbox {
                 }
             }
 
+            let linkURL;
+            if(this.options.links && captionContainer) {
+                linkURL = captionContainer.getAttribute(this.options.linksData);
+            }
+
             if (!this.options.loop) {
                 if (this.currentImageIndex === 0) {
                     this.hide(this.domNodes.navigation.querySelector('.sl-prev'));
@@ -544,11 +571,13 @@ class SimpleLightbox {
                 this.fadeIn(this.domNodes.image, 300, () => {
                     this.isAnimating = false;
                     this.setCaption(captionText, imageWidth);
+                    this.setLink(linkURL, imageWidth, imageHeight);
                 });
 
             } else {
                 this.isAnimating = false;
                 this.setCaption(captionText, imageWidth);
+                this.setLink(linkURL, imageWidth, imageHeight);
             }
 
             if (this.options.additionalHtml && !this.domNodes.additionalHtml) {
@@ -994,6 +1023,36 @@ class SimpleLightbox {
                 this.fadeIn(this.domNodes.caption, 300);
             }, this.options.captionDelay);
         }
+    }
+
+    setLink(linkURL, imageWidth, imageHeight) {
+        if (this.options.links && linkURL && linkURL !== '' && typeof linkURL !== "undefined") {
+            this.hide(this.domNodes.link);
+            this.domNodes.link.style.width = imageWidth + 'px';
+            this.domNodes.link.style.height = imageHeight + 'px';
+            this.domNodes.link.href = linkURL;
+
+            if (this.options.videoLinks && this.options.videoRegEx.test(linkURL)) {
+                this.addEventListener(this.domNodes.link, ['click'], (event => {
+                    event.preventDefault();
+                    this.loadVideo(linkURL, imageWidth, imageHeight);
+                }));
+            }
+
+            this.domNodes.image.appendChild(this.domNodes.link);
+
+            this.fadeIn(this.domNodes.link, 300);
+        }
+    }
+
+    loadVideo(videoURL, imageWidth, imageHeight) {
+        console.log(videoURL);
+        this.domNodes.video.width = imageWidth;
+        this.domNodes.video.height = imageHeight;
+        this.domNodes.video.src = videoURL;
+        this.domNodes.image.appendChild(this.domNodes.video);
+        this.fadeOut(this.domNodes.link, 300);
+        this.currentImage.style.display = 'none';
     }
 
     slide(speed, pos) {
