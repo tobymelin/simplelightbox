@@ -76,6 +76,8 @@ For a whole example just look at the demo folder.
 | captionClass | '' | string | add an additional class to the sl-caption |
 | links | true | bool | show links if available or not |
 | linksData | title | string | get the link from given attribute |
+| videoLinks | true | bool | play videos inline if true |
+| videoRegEx | /.*\.(mp4|webm|ogg)$/ | RegEx | RegEx matching to determine if a video has been linked in linksData |
 | close | true | bool | show the close button or not |
 | closeText | '×' | string | text or html for the close button |
 | swipeClose | true | bool | swipe up or down to close gallery |

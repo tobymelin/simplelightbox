@@ -16,7 +16,7 @@ class SimpleLightbox {
         links: true,
         linksData: 'data-link',
         videoLinks: true,
-        videoRegEx: /.*\.(mp4|avi)$/,
+        videoRegEx: /.*\.(mp4|webm|ogg)$/,
         close: true,
         closeText: '&times;',
         swipeClose: true,
