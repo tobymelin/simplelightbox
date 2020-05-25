@@ -4,7 +4,7 @@ Touch-friendly image lightbox for mobile and desktop
 **Changes:**
 
 * Added functionality for video playback within lightbox
-  * New options: links, linksData
+  * New options: links, linksData, videoLinks, videoRegEx
 
 ### Features
 * responsive
